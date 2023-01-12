@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Employee Address Analysis</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.95em%22 font-size=%2286%22>📊</text></svg>">
+		<link rel="stylesheet" href="reveal.js/dist/reset.css">
+		<link rel="stylesheet" href="reveal.js/dist/reveal.css">
+		<link rel="stylesheet" href="reveal.js/dist/theme/league.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="reveal.js/plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<!-- 1 -->
+				<section>
+					An Analysis of Community Characteristics and Wage Theft Prevalence
+					<p style="font-size: smaller">Division of Data Analytics</p>
+				</section>
+				<!-- 2 -->
+				<section>
+					Employees Owed Back Wages
+					<p>
+						<ul style="font-size: smaller">
+							<li class="fragment highlight-current-green">Each year, WHD finds back wages for tens of thousands of employees</li>
+							<li class="fragment highlight-current-green">Addresses are collected for the majority</li>
+							<li class="fragment highlight-current-green">What are the characteristics of the communities in which these employees live?</li>
+							<li class="fragment highlight-current-green">Can we utilize this information to refine our targeting strategies?</li>
+						</ul>
+					</p>
+				</section>
+				<!-- 3 -->
+				<section>
+					<section>
+						Analysis Overview
+						<p>
+							<ul style="font-size: smaller">
+								<li class="fragment highlight-current-green">Retrieve employees addresses from BWFS for FY20 - FY22</li>
+								<li class="fragment highlight-current-green">Geocode addresses to identify Census geographies in which employees live</li>
+								<li class="fragment highlight-current-green">Utilizing 2016 - 2020 American Community Survey (ACS) data, estimate the following for each public use microdata area (PUMA):</li>
+								<li class="indent fragment highlight-current-green">Unemployment rate</li>
+								<li class="indent fragment highlight-current-green">Median educational attainment</li>
+								<li class="indent fragment highlight-current-green">Wage and salary earnings at the 10th percentile</li>
+								<li class="indent fragment highlight-current-green">Proportion of workers that are Black</li>
+								<li class="indent fragment highlight-current-green">Proportion of workers that are Hispanic</li>
+								<li class="indent fragment highlight-current-green">Proportion of workers that are not White</li>
+								<li class="indent fragment highlight-current-green">Total population</li>
+							</ul>
+						</p>
+					</section>
+					<section>
+						Analysis Overview
+						<p>
+							<ul style="font-size: smaller">
+								<li class="fragment highlight-current-green">Combine employee address data with ACS data</li>
+								<li class="fragment highlight-current-green">Compute the number of employees found due back wages per 10,000 in each PUMA</li>
+								<li class="fragment highlight-current-green">Identify correlations between employees due back wages per capita and community characteristics</li>
+							</ul>
+						</p>
+					</section>
+				</section>
+				<!-- 4 -->
+				<section>
+					Visualizing PUMAs
+					<div id="map"></div>
+				</section>
+				<!-- 5 -->
+				<section>
+					California - Employees Due Back Wages per Capita
+					<p></p>
+					<div id="caliMap"></div>
+				</section>
+				<!-- 6 -->
+				<section>
+					<iframe src="plot.html" frameborder="10" height="610" width="975"></iframe>
+				</section>
+			</div>
+		</div>
+
+		<script src="reveal.js/dist/reveal.js"></script>
+		<script src="reveal.js/plugin/notes/notes.js"></script>
+		<script src="reveal.js/plugin/markdown/markdown.js"></script>
+		<script src="reveal.js/plugin/highlight/highlight.js"></script>
+		<script src="https://d3js.org/d3.v7.min.js"></script>
+		<script src="https://unpkg.com/topojson-client@3"></script>
+		<script src="assets/pumasMap.js"></script>
+		<script src="assets/caliMap.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+		<style>
+			.indent {
+				margin-left: 40px;
+				text-indent: 10px;
+				list-style-type: circle;
+			}
+		</style>
+	</body>
+</html>
