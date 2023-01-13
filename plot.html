@@ -7,22 +7,22 @@
 </head>
 <body>
     <div class="centered">
-        <div id="observablehq-viewof-state-3bafd83b"></div>
-        <div id="observablehq-viewof-correlate-3bafd83b"></div>
-        <div id="observablehq-plot-3bafd83b"></div>
+        <div id="observablehq-viewof-state-62623006"></div>
+        <div id="observablehq-viewof-correlate-62623006"></div>
+        <div id="observablehq-plot-62623006"></div>
     </div>
 
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
     <script type="module">
         import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
-        import define from "https://api.observablehq.com/@mthelm85/plot-scatterplot@83.js?v=3";
+        import define from "https://api.observablehq.com/@mthelm85/plot-scatterplot@84.js?v=3";
         new Runtime().module(define, name => {
-        if (name === "viewof state") return new Inspector(document.querySelector("#observablehq-viewof-state-3bafd83b"));
-        if (name === "viewof correlate") return new Inspector(document.querySelector("#observablehq-viewof-correlate-3bafd83b"));
-        if (name === "plot") return new Inspector(document.querySelector("#observablehq-plot-3bafd83b"));
+        if (name === "viewof state") return new Inspector(document.querySelector("#observablehq-viewof-state-62623006"));
+        if (name === "viewof correlate") return new Inspector(document.querySelector("#observablehq-viewof-correlate-62623006"));
+        if (name === "plot") return new Inspector(document.querySelector("#observablehq-plot-62623006"));
         return ["plotData"].includes(name);
-    });
+        });
     </script>
     <style>
         body {

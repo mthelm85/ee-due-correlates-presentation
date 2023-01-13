@@ -1,5 +1,5 @@
 Reveal.on('ready', async () => {
-    const mapColor = "#7a5cff"
+    // const mapColor = "#7a5cff"
     const format = d3.format(",.2f")
     const california = await d3.json('assets/california_2010_albersusa_topo.json', json => json)
     const projection = d3.geoMercator().translate([6500,2350]).scale(2900)
@@ -14,20 +14,19 @@ Reveal.on('ready', async () => {
         id: obj.STATEFIP.padStart(2, '0') + obj.PUMA.padStart(5, '0'),
         position: features.get(obj.STATEFIP.padStart(2, '0') + obj.PUMA.padStart(5, '0')) && path.centroid(features.get(obj.STATEFIP.padStart(2, '0') + obj.PUMA.padStart(5, '0'))),
         title: features.get(obj.STATEFIP.padStart(2, '0') + obj.PUMA.padStart(5, '0')).properties.Name,
-        value: parseFloat(obj.ees_per_capita)
+        value: Math.log(parseFloat(obj.ees_per_capita) + 1)
     }))
 
     const color = d3.scaleSequential()
         .domain(d3.extent(data.map(d => d.value)))
         .interpolator(d3.interpolatePurples)
 
-    // zooming works, but spikes don't resize, which makes it not look good
     const zoom = d3.zoom()
         .scaleExtent([1, 8])
         .on("zoom", zoomed)
 
-    const length = d3.scaleLinear([0, d3.max(data, d => d.value)], [0, 150])
-    const spike = (length, width = 7) => `M${-width / 2},0L0,${-length}L${width / 2},0`
+    // const length = d3.scaleLinear([0, d3.max(data, d => d.value)], [0, 150])
+    // const spike = (length, width = 2) => `M${-width / 2},0L0,${-length}L${width / 2},0`
 
     const svg = d3.select("#caliMap")
         .append("svg")
@@ -50,10 +49,7 @@ Reveal.on('ready', async () => {
       .attr("d", path)
       .append("title")
       .text(d => `PUMA: ${d.properties.Name}
-EEs Due per Capita: ${format(data.find(el => el.id == d.properties.GEOID) == undefined ? 0 : data.find(el => el.id == d.properties.GEOID).value)}`)
-    //   .text(d => d.properties.Name)
-
-    console.log(data)
+Log of EEs Due per Capita: ${format(data.find(el => el.id == d.properties.GEOID) == undefined ? 0 : data.find(el => el.id == d.properties.GEOID).value)}`)
 
     g.append("path")
       .datum(topojson.mesh(california, california.objects.ipums_puma_2010, (a, b) => a !== b))
@@ -73,20 +69,21 @@ EEs Due per Capita: ${format(data.find(el => el.id == d.properties.GEOID) == und
     //   .join("g")
     //   .attr("transform", (d, i) => `translate(${975 - (i + 1) * 20}, 490)`)
 
-    // legend.append("path")
-    //     .attr("fill", mapColor)
-    //     .attr("fill-opacity", 0.3)
-    //     .attr("stroke", mapColor)
-    //     .attr("d", d => spike(length(d)))
-
-    // legend.append("text")
-    //     .attr("dy", "1.3em")
-    //     .text(length.tickFormat(4, "s"))
-
-//     g.append("g")
+//     legend.append("path")
 //         .attr("fill", mapColor)
 //         .attr("fill-opacity", 0.3)
 //         .attr("stroke", mapColor)
+//         .attr("d", d => spike(length(d)))
+
+//     legend.append("text")
+//         .attr("dy", "1.3em")
+//         .text(length.tickFormat(4, "s"))
+
+//     g.append("g")
+//         .attr("fill", mapColor)
+//         .attr("fill-opacity", 0.1)
+//         .attr("stroke", mapColor)
+//         .attr("stroke-opacity", 0.3)
 //         .selectAll("path")
 //         .data(data
 //             .filter(d => d.position)
