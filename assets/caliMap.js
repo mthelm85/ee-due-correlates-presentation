@@ -1,8 +1,8 @@
 Reveal.on('ready', async () => {
     const mapColor = "#7a5cff"
-    const format = d3.format(",.0f")
+    const format = d3.format(",.2f")
     const california = await d3.json('assets/california_2010_albersusa_topo.json', json => json)
-    const projection = d3.geoMercator().translate([6750,2400]).scale(3000)
+    const projection = d3.geoMercator().translate([6500,2350]).scale(2900)
     const path = d3.geoPath(projection)
     const rawData = await d3.csv('assets/cali_data.csv', csv => csv)
     const features = new Map(
@@ -17,6 +17,15 @@ Reveal.on('ready', async () => {
         value: parseFloat(obj.ees_per_capita)
     }))
 
+    const color = d3.scaleSequential()
+        .domain(d3.extent(data.map(d => d.value)))
+        .interpolator(d3.interpolatePurples)
+
+    // zooming works, but spikes don't resize, which makes it not look good
+    const zoom = d3.zoom()
+        .scaleExtent([1, 8])
+        .on("zoom", zoomed)
+
     const length = d3.scaleLinear([0, d3.max(data, d => d.value)], [0, 150])
     const spike = (length, width = 7) => `M${-width / 2},0L0,${-length}L${width / 2},0`
 
@@ -24,54 +33,71 @@ Reveal.on('ready', async () => {
         .append("svg")
         .attr("viewBox", [0, 0, 975, 610])
 
-    svg.append("g")
+    const g = svg.append("g")
+
+    function zoomed(event) {
+        const {transform} = event
+        g.attr("transform", transform)
+        g.attr("stroke-width", 1 / transform.k)
+    }
+
+    g.append("g")
       .selectAll("path")
       .data(topojson.feature(california, california.objects.ipums_puma_2010).features)
       .join("path")
-      .attr("fill", "#0f081f")
+      .attr("fill", d => data.find(el => el.id == d.properties.GEOID) == undefined ? color(0) : color(data.find(el => el.id == d.properties.GEOID).value))
+    //   .attr("fill", "#0f081f")
       .attr("d", path)
+      .append("title")
+      .text(d => `PUMA: ${d.properties.Name}
+EEs Due per Capita: ${format(data.find(el => el.id == d.properties.GEOID) == undefined ? 0 : data.find(el => el.id == d.properties.GEOID).value)}`)
+    //   .text(d => d.properties.Name)
 
-    svg.append("path")
+    console.log(data)
+
+    g.append("path")
       .datum(topojson.mesh(california, california.objects.ipums_puma_2010, (a, b) => a !== b))
       .attr("fill", "none")
-      .attr("stroke", "#f7f7f7")
+      .attr("stroke", "#000")
       .attr("stroke-linejoin", "round")
       .attr("stroke-width", 0.25)
       .attr("d", path)
 
-    const legend = svg.append("g")
-      .attr("fill", "#777")
-      .attr("text-anchor", "middle")
-      .attr("font-family", "sans-serif")
-      .attr("font-size", 10)
-      .selectAll("g")
-      .data(length.ticks(6).slice(0).reverse())
-      .join("g")
-      .attr("transform", (d, i) => `translate(${975 - (i + 1) * 20}, 490)`)
+    // const legend = g.append("g")
+    //   .attr("fill", "#777")
+    //   .attr("text-anchor", "middle")
+    //   .attr("font-family", "sans-serif")
+    //   .attr("font-size", 10)
+    //   .selectAll("g")
+    //   .data(length.ticks(6).slice(0).reverse())
+    //   .join("g")
+    //   .attr("transform", (d, i) => `translate(${975 - (i + 1) * 20}, 490)`)
 
-    legend.append("path")
-        .attr("fill", mapColor)
-        .attr("fill-opacity", 0.3)
-        .attr("stroke", mapColor)
-        .attr("d", d => spike(length(d)))
+    // legend.append("path")
+    //     .attr("fill", mapColor)
+    //     .attr("fill-opacity", 0.3)
+    //     .attr("stroke", mapColor)
+    //     .attr("d", d => spike(length(d)))
 
-    legend.append("text")
-        .attr("dy", "1.3em")
-        .text(length.tickFormat(4, "s"))
+    // legend.append("text")
+    //     .attr("dy", "1.3em")
+    //     .text(length.tickFormat(4, "s"))
 
-    svg.append("g")
-        .attr("fill", mapColor)
-        .attr("fill-opacity", 0.3)
-        .attr("stroke", mapColor)
-        .selectAll("path")
-        .data(data
-            .filter(d => d.position)
-            .sort((a, b) => d3.ascending(a.position[1], b.position[1])
-                || d3.ascending(a.position[0], b.position[0])))
-        .join("path")
-        .attr("transform", d => `translate(${d.position})`)
-        .attr("d", d => spike(length(d.value)))
-        .append("title")
-        .text(d => `PUMA: ${d.title}
-EEs Due per Capita: ${format(d.value)}`)
+//     g.append("g")
+//         .attr("fill", mapColor)
+//         .attr("fill-opacity", 0.3)
+//         .attr("stroke", mapColor)
+//         .selectAll("path")
+//         .data(data
+//             .filter(d => d.position)
+//             .sort((a, b) => d3.ascending(a.position[1], b.position[1])
+//                 || d3.ascending(a.position[0], b.position[0])))
+//         .join("path")
+//         .attr("transform", d => `translate(${d.position})`)
+//         .attr("d", d => spike(length(d.value)))
+//         .append("title")
+//         .text(d => `PUMA: ${d.title}
+// EEs Due per Capita: ${format(d.value)}`)
+
+    svg.call(zoom)
 })
