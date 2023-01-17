@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
     <div class="centered">
-        <div id="observablehq-viewof-state-62623006"></div>
-        <div id="observablehq-viewof-correlate-62623006"></div>
-        <div id="observablehq-plot-62623006"></div>
+        <div id="observablehq-viewof-state-0118104b"></div>
+        <div id="observablehq-viewof-correlate-0118104b"></div>
+        <div id="observablehq-plot-0118104b"></div>
     </div>
 
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css" />
     <script type="module">
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
-        import define from "https://api.observablehq.com/@mthelm85/plot-scatterplot@84.js?v=3";
-        new Runtime().module(define, name => {
-        if (name === "viewof state") return new Inspector(document.querySelector("#observablehq-viewof-state-62623006"));
-        if (name === "viewof correlate") return new Inspector(document.querySelector("#observablehq-viewof-correlate-62623006"));
-        if (name === "plot") return new Inspector(document.querySelector("#observablehq-plot-62623006"));
-        return ["plotData"].includes(name);
+        import {
+            Runtime,
+            Inspector,
+        } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+        import define from "https://api.observablehq.com/@mthelm85/plot-scatterplot@88.js?v=3";
+        new Runtime().module(define, (name) => {
+            if (name === "viewof state")
+                return new Inspector(
+                    document.querySelector(
+                        "#observablehq-viewof-state-0118104b"
+                    )
+                );
+            if (name === "viewof correlate")
+                return new Inspector(
+                    document.querySelector(
+                        "#observablehq-viewof-correlate-0118104b"
+                    )
+                );
+            if (name === "plot")
+                return new Inspector(
+                    document.querySelector("#observablehq-plot-0118104b")
+                );
+            return ["plotData"].includes(name);
         });
     </script>
     <style>
@@ -29,6 +46,7 @@
             height: 610px;
             width: 975px;
         }
+
         .centered {
             margin: auto;
             width: 80%;
@@ -36,8 +54,9 @@
 
         label {
             color: white;
-            font-family: 'Arial';
+            font-family: "Arial";
         }
     </style>
 </body>
+
 </html>
