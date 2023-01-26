@@ -9,35 +9,19 @@
 
 <body>
     <div class="centered">
-        <div id="observablehq-viewof-state-0118104b"></div>
-        <div id="observablehq-viewof-correlate-0118104b"></div>
-        <div id="observablehq-plot-0118104b"></div>
+        <div id="observablehq-viewof-state-3ea38b36"></div>
+        <div id="observablehq-viewof-correlate-3ea38b36"></div>
+        <div id="observablehq-plot-3ea38b36"></div>
     </div>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
     <script type="module">
-        import {
-            Runtime,
-            Inspector,
-        } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
-        import define from "https://api.observablehq.com/@mthelm85/plot-scatterplot@88.js?v=3";
-        new Runtime().module(define, (name) => {
-            if (name === "viewof state")
-                return new Inspector(
-                    document.querySelector(
-                        "#observablehq-viewof-state-0118104b"
-                    )
-                );
-            if (name === "viewof correlate")
-                return new Inspector(
-                    document.querySelector(
-                        "#observablehq-viewof-correlate-0118104b"
-                    )
-                );
-            if (name === "plot")
-                return new Inspector(
-                    document.querySelector("#observablehq-plot-0118104b")
-                );
+        import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+        import define from "https://api.observablehq.com/@mthelm85/plot-scatterplot@101.js?v=3";
+        new Runtime().module(define, name => {
+            if (name === "viewof state") return new Inspector(document.querySelector("#observablehq-viewof-state-3ea38b36"));
+            if (name === "viewof correlate") return new Inspector(document.querySelector("#observablehq-viewof-correlate-3ea38b36"));
+            if (name === "plot") return new Inspector(document.querySelector("#observablehq-plot-3ea38b36"));
             return ["plotData"].includes(name);
         });
     </script>
