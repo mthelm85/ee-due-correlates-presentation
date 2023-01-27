@@ -34,8 +34,8 @@
 					<li class="fragment highlight-current-green">Addresses are collected for the majority</li>
 					<li class="fragment highlight-current-green">What are the characteristics of the communities in
 						which these employees live?</li>
-					<li class="fragment highlight-current-green">Can we utilize this information to refine our targeting
-						strategies?</li>
+					<li class="fragment highlight-current-green">Can we utilize this information to direct resources to
+						areas where workers have the greatest need?</li>
 				</ul>
 				</p>
 			</section>
@@ -45,21 +45,22 @@
 					Analysis Overview
 					<p>
 					<ul style="font-size: smaller">
-						<li class="fragment highlight-current-green">Retrieve employees addresses for FLSA cases initiated
+						<li class="fragment highlight-current-green">Retrieve employees addresses for FLSA cases
+							initiated
 							between 2016 - 2020</li>
 						<li class="fragment highlight-current-green">Geocode addresses to identify Census geographies in
 							which employees live</li>
 						<li class="fragment highlight-current-green">Utilizing 2016 - 2020 American Community Survey
-							(ACS) data, estimate the following for each public use microdata area (PUMA):</li>
+							(ACS) data, estimate community characteristics for each public use microdata area (PUMA),
+							including:</li>
 						<li class="indent fragment highlight-current-green">Unemployment rate</li>
-						<li class="indent fragment highlight-current-green">Median educational attainment</li>
 						<li class="indent fragment highlight-current-green">Wage and salary earnings at the 10th
 							percentile</li>
-						<li class="indent fragment highlight-current-green">Proportion of workers that are Black</li>
-						<li class="indent fragment highlight-current-green">Proportion of workers that are Hispanic</li>
-						<li class="indent fragment highlight-current-green">Proportion of workers that are not White
-						</li>
-						<li class="indent fragment highlight-current-green">Total population</li>
+						<li class="indent fragment highlight-current-green">Black workers</li>
+						<li class="indent fragment highlight-current-green">Hispanic workers</li>
+						<li class="indent fragment highlight-current-green">Workers living below poverty threshold</li>
+						<li class="indent fragment highlight-current-green">Workers that are not U.S. citizens</li>
+						<li class="indent fragment highlight-current-green">...and several others</li>
 					</ul>
 					</p>
 				</section>
@@ -72,37 +73,77 @@
 							wages per 10,000 in each PUMA</li>
 						<li class="fragment highlight-current-green">Identify correlations between employees due back
 							wages per capita and community characteristics</li>
+						<li class="indent">Houston</li>
+						<li class="indent">Miami</li>
+						<li class="indent">NYC</li>
 					</ul>
 					</p>
 				</section>
 			</section>
 			<!-- 4 -->
 			<section>
-				Visualizing PUMAs
-				<div id="map"></div>
+				<section>
+					Houston
+					<br />
+					<br />
+					<div id="houstonMap"></div>
+				</section>
+				<section>
+					Houston - Employees Due BWs per capita
+					<br />
+					<br />
+					<div id="houstonMapEe"></div>
+				</section>
+				<section>
+					Houston - EEs Due BWs per Capita & Hispanic Workforce
+					<br />
+					<br />
+					<div id="houstonMapHisp"></div>
+				</section>
+				<section>
+					New York City
+					<br />
+					<br />
+					<div id="nycMap"></div>
+				</section>
+				<section>
+					NYC - Employees Due BWs per capita
+					<br />
+					<br />
+					<div id="nycMapEe"></div>
+				</section>
+				<section>
+					NYC - EEs Due BWs per Capita & Black Workforce
+					<br />
+					<br />
+					<div id="nycMapBlack"></div>
+				</section>
+				<section>
+					Miami
+					<br />
+					<br />
+					<div id="miamiMap"></div>
+				</section>
+				<section>
+					Miami - Employees Due BWs per capita
+					<br />
+					<br />
+					<div id="miamiMapEe"></div>
+				</section>
+				<section>
+					Miami - EEs Due BWs per Capita & Working Poor
+					<br />
+					<br />
+					<div id="miamiMapPov"></div>
+				</section>
 			</section>
 			<!-- 5 -->
 			<section>
-				California - Log Employees Due Back Wages per Capita
-				<br />
-				<br />
-				<div id="caliMap"></div>
+				<iframe src="plot.html" frameborder="10" height="1600px" width="1200px"></iframe>
 			</section>
 			<!-- 6 -->
 			<section>
-				<iframe src="plot.html" frameborder="10" height="1600px" width="1200px"></iframe>
-			</section>
-			<!-- 7 -->
-			<section>
 				Conclusions & Next Steps
-				<p>
-				<ul style="font-size: smaller">
-					<li class="fragment highlight-current-green">Correlations exist locally</li>
-					<li class="fragment highlight-current-green">Local enforcement strategies are very important</li>
-					<li class="fragment highlight-current-green">Build a model for a state or large metro area, pilot
-					</li>
-				</ul>
-				</p>
 			</section>
 		</div>
 	</div>
@@ -113,8 +154,17 @@
 	<script src="reveal.js/plugin/highlight/highlight.js"></script>
 	<script src="https://d3js.org/d3.v7.min.js"></script>
 	<script src="https://unpkg.com/topojson-client@3"></script>
-	<script src="assets/pumasMap.js"></script>
-	<script src="assets/caliMap.js"></script>
+	<!-- <script src="assets/pumasMap.js"></script> -->
+	<!-- <script src="assets/caliMap.js"></script> -->
+	<script src="assets/houstonMap.js"></script>
+	<script src="assets/houstonMapEe.js"></script>
+	<script src="assets/houstonMapHisp.js"></script>
+	<script src="assets/nycMap.js"></script>
+	<script src="assets/nycMapEe.js"></script>
+	<script src="assets/nycMapBlack.js"></script>
+	<script src="assets/miamiMap.js"></script>
+	<script src="assets/miamiMapEe.js"></script>
+	<script src="assets/miamiMapPov.js"></script>
 	<script>
 		// More info about initialization & config:
 		// - https://revealjs.com/initialization/
@@ -131,6 +181,11 @@
 			margin-left: 40px;
 			text-indent: 10px;
 			list-style-type: circle;
+		}
+
+		.place-label {
+			fill: #fff;
+			font-size: 6px;
 		}
 	</style>
 </body>
