@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+</head>
+
+<body>
+    <div id="lmap"></div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</body>
+<script>
+    let info = L.control();
+
+    let map = L.map('lmap', { zoomControl: false }).setView([40.2, -97.6], 4)
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map)
+
+    // Hack to ensure map tiles render properly
+    setTimeout(() => {
+        map.invalidateSize(true)
+    }, 10)
+
+    fetch("./assets/shape_files/houston_puma.json")
+        .then(res => res.json())
+        .then(json => {
+            function style(feature) {
+                return {
+                    fillColor: false,
+                    weight: 1,
+                    opacity: 1,
+                    color: "#f7006b",
+                    fillOpacity: 0.0
+                };
+            }
+
+            let geojson
+            geojson = L.geoJSON(json.features, {
+                style: style,
+            }).addTo(map)
+        })
+
+    fetch("./assets/shape_files/nyc_puma.json")
+        .then(res => res.json())
+        .then(json => {
+            function style(feature) {
+                return {
+                    fillColor: false,
+                    weight: 1,
+                    opacity: 1,
+                    color: "#f7006b",
+                    fillOpacity: 0.0
+                };
+            }
+
+            let geojson
+            geojson = L.geoJSON(json.features, {
+                style: style,
+            }).addTo(map)
+        })
+
+    fetch("./assets/shape_files/miami_puma.json")
+        .then(res => res.json())
+        .then(json => {
+            function style(feature) {
+                return {
+                    fillColor: false,
+                    weight: 1,
+                    opacity: 1,
+                    color: "#f7006b",
+                    fillOpacity: 0.0
+                };
+            }
+
+            let geojson
+            geojson = L.geoJSON(json.features, {
+                style: style,
+            }).addTo(map)
+        })
+</script>
+<style>
+    #lmap {
+        height: 575px;
+        width: 100%;
+    }
+
+    .leaflet-control-attribution {
+        visibility: hidden;
+    }
+</style>
+
+</html>
